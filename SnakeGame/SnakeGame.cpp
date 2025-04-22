@@ -3,7 +3,24 @@
 #include <cstdlib>
 #include <conio.h>
 using namespace std;
-void gotoxy(int column, int line);
+// Kích thước khung trò chơi
+const int WIDTH = 40;    // Chiều ngang
+const int HEIGHT = 20;   // Chiều dọc
+
+// ======= HÀM DI CHUYỂN CON TRỎ TRONG CONSOLE =======
+void gotoxy(int x, int y) {
+    COORD coord = { SHORT(x), SHORT(y) };
+    SetConsoleCursorPosition(GetStdHandle(STD_OUTPUT_HANDLE), coord);
+}
+// ======= HÀM ẨN CON TRỎ CHUỘT TRONG CONSOLE =======
+void HideCursor() {
+
+    HANDLE consoleHandle = GetStdHandle(STD_OUTPUT_HANDLE);
+    CONSOLE_CURSOR_INFO info;
+    info.dwSize = 100;
+    info.bVisible = FALSE;
+    SetConsoleCursorInfo(consoleHandle, &info);
+}
 struct Point {
     int x, y;
 };
@@ -58,12 +75,4 @@ int main()
 }
 
 
-void gotoxy(int column, int line)
-{
-    COORD coord;
-    coord.X = column;
-    coord.Y = line;
-    SetConsoleCursorPosition(
-        GetStdHandle(STD_OUTPUT_HANDLE),
-        coord
-    );
+
