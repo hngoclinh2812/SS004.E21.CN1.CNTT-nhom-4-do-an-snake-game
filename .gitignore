@@ -1,32 +1,67 @@
-# Prerequisites
-*.d
-
-# Compiled Object files
-*.slo
-*.lo
-*.o
-*.obj
-
-# Precompiled Headers
-*.gch
-*.pch
-
-# Compiled Dynamic libraries
-*.so
-*.dylib
-*.dll
-
-# Fortran module files
-*.mod
-*.smod
-
-# Compiled Static libraries
-*.lai
-*.la
-*.a
-*.lib
-
-# Executables
+# Build results
+[Bb]in/
+[Oo]bj/
 *.exe
-*.out
-*.app
+*.ilk
+*.log
+*.pch
+*.pdb
+*.ipdb
+*.pgc
+*.pgd
+*.rsp
+*.sbr
+*.tlh
+*.tli
+*.tmp
+*.cache
+*.csproj.user
+*.dbmdl
+*.user
+*.suo
+*.sdf
+*.opensdf
+*.VC.db
+
+# Visual Studio folders
+.vscode/
+.vs/
+Debug/
+Release/
+x64/
+x86/
+ARM/
+ARM64/
+
+# Auto-generated files
+*.aps
+*.ncb
+*.sdf
+*.opendb
+*.VC.opendb
+*.tlog/
+*.idb
+
+# CMake folders
+CMakeFiles/
+CMakeCache.txt
+cmake_install.cmake
+Makefile
+
+# NuGet
+*.nupkg
+*.snupkg
+*.nuspec
+packages/
+
+# Backup / temp
+*.log
+*.bak
+*.tmp
+*.old
+*.orig
+
+# System files
+Thumbs.db
+.DS_Store
+ehthumbs.db
