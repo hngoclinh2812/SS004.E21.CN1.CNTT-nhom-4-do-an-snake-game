@@ -2,7 +2,7 @@
 #include <windows.h>
 #include <cstdlib>
 #include <conio.h>
-
+#include <ctime>
 using namespace std;
 
 const int WIDTH = 40;    
@@ -161,5 +161,3 @@ int main() {
     game.Run();
     return 0;
 }
-
-
