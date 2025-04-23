@@ -37,9 +37,20 @@ public:
     Point food;
     bool gameOver;
     int score;
-    int speed; // tốc độ di chuyển (ms)
+    int speed;
+
+    int lichsu_diem[100];
+    int so_lan_choi;
 
     SnakeGame()
+    {
+        so_lan_choi = 0;
+        HideCursor();
+        srand(time(0));
+        resetGame();
+    }
+
+    void resetGame()
     {
         length = 3;
         snake[0] = { 10, 10 };
@@ -48,8 +59,7 @@ public:
         direction = 0;
         gameOver = false;
         score = 0;
-        speed = 150; // tốc độ ban đầu
-        srand(time(0));
+        speed = 150;
         spawnFood();
     }
 
@@ -81,10 +91,10 @@ public:
             if (key == 224)
             {
                 key = _getch();
-                if (key == 75 && direction != 0) direction = 2; // ←
-                if (key == 77 && direction != 2) direction = 0; // →
-                if (key == 72 && direction != 1) direction = 3; // ↑
-                if (key == 80 && direction != 3) direction = 1; // ↓
+                if (key == 75 && direction != 0) direction = 2;
+                if (key == 77 && direction != 2) direction = 0;
+                if (key == 72 && direction != 1) direction = 3;
+                if (key == 80 && direction != 3) direction = 1;
             }
         }
     }
@@ -116,19 +126,15 @@ public:
         for (int i = 1; i < length; i++)
         {
             if (snake[0].x == snake[i].x && snake[0].y == snake[i].y)
-            {
                 gameOver = true;
-            }
         }
 
         if (snake[0].x == food.x && snake[0].y == food.y)
         {
             length++;
             score += 10;
-
             if (speed > 50)
-                speed -= 10; // Tăng tốc nhanh hơn mỗi lần ăn mồi
-
+                speed -= 10;
             spawnFood();
         }
     }
@@ -136,8 +142,6 @@ public:
     void Render()
     {
         gotoxy(0, 0);
-
-        // Vẽ khung
         for (int i = 0; i < WIDTH; i++) cout << "#";
         cout << "\n";
         for (int i = 1; i < HEIGHT - 1; i++)
@@ -153,34 +157,57 @@ public:
         }
         for (int i = 0; i < WIDTH; i++) cout << "#";
 
-        // Vẽ rắn
         for (int i = 0; i < length; i++)
         {
             gotoxy(snake[i].x, snake[i].y);
             cout << (i == 0 ? "O" : "o");
         }
 
-        // Vẽ mồi
         gotoxy(food.x, food.y);
         cout << "*";
 
-        // Vẽ điểm
         gotoxy(0, HEIGHT);
         cout << "Score: " << score;
     }
 
+    void showHistory()
+    {
+        cout << "\nLich su diem so:\n";
+        for (int i = 0; i < so_lan_choi; i++)
+        {
+            cout << "- Lan " << i + 1 << ": " << lichsu_diem[i] << endl;
+        }
+    }
+
     void Run()
     {
-        HideCursor();
-        while (!gameOver)
+        char choi_tiep;
+        do
         {
-            Input();
-            Update();
-            Render();
-            Sleep(speed); // tốc độ sẽ giảm dần
+            resetGame();
+            while (!gameOver)
+            {
+                Input();
+                Update();
+                Render();
+                Sleep(speed);
+            }
+
+            lichsu_diem[so_lan_choi++] = score;
+
+            gotoxy(0, HEIGHT + 2);
+            cout << "Game Over! Diem cua ban: " << score << endl;
+
+            showHistory();
+
+            cout << "\nBan co muon choi lai? (y/n): ";
+            cin >> choi_tiep;
+
         }
-        gotoxy(0, HEIGHT + 2);
-        cout << "Game Over! Final Score: " << score << "\n";
+        while (choi_tiep == 'y' || choi_tiep == 'Y');
+
+        gotoxy(0, HEIGHT + 10);
+        cout << "Cam on ban da choi!\n";
     }
 };
 
