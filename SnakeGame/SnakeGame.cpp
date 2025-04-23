@@ -2,6 +2,7 @@
 #include <windows.h>
 #include <cstdlib>
 #include <conio.h>
+
 using namespace std;
 
 const int WIDTH = 40;    
@@ -160,6 +161,5 @@ int main() {
     game.Run();
     return 0;
 }
-
 
 
