@@ -65,5 +65,5 @@ void gotoxy(int column, int line)
     coord.Y = line;
     SetConsoleCursorPosition(
         GetStdHandle(STD_OUTPUT_HANDLE),
-        coord
-    );
+        coord;
+}
