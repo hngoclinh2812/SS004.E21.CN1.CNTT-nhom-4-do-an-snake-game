@@ -3,7 +3,24 @@
 #include <cstdlib>
 #include <conio.h>
 using namespace std;
-void gotoxy(int column, int line);
+// Kích thước khung trò chơi
+const int WIDTH = 40;    // Chiều ngang
+const int HEIGHT = 20;   // Chiều dọc
+
+// ======= HÀM DI CHUYỂN CON TRỎ TRONG CONSOLE =======
+void gotoxy(int x, int y) {
+    COORD coord = { SHORT(x), SHORT(y) };
+    SetConsoleCursorPosition(GetStdHandle(STD_OUTPUT_HANDLE), coord);
+}
+// ======= HÀM ẨN CON TRỎ CHUỘT TRONG CONSOLE =======
+void HideCursor() {
+
+    HANDLE consoleHandle = GetStdHandle(STD_OUTPUT_HANDLE);
+    CONSOLE_CURSOR_INFO info;
+    info.dwSize = 100;
+    info.bVisible = FALSE;
+    SetConsoleCursorInfo(consoleHandle, &info);
+}
 struct Point {
     int x, y;
 };
@@ -11,17 +28,25 @@ class CONRAN {
 public:
     struct Point A[100];
     int DoDai;
+    Point Moi;
     CONRAN() {
         DoDai = 3;
         A[0].x = 10; A[0].y = 10;
         A[1].x = 11; A[1].y = 10;
         A[2].x = 12; A[2].y = 10;
+        TaoMoi();
     }
-    void Ve() {
+    void Ve() { 
         for (int i = 0; i < DoDai; i++) {
             gotoxy(A[i].x, A[i].y);
             cout << "X";
         }
+        gotoxy(Moi.x, Moi.y); cout << "*";
+
+    }
+    void TaoMoi() {
+        Moi.x = 1 + rand() % (WIDTH - 2);
+        Moi.y = 1 + rand() % (HEIGHT - 2);
     }
     void DiChuyen(int Huong) {
         for (int i = DoDai - 1; i > 0; i--)
@@ -31,6 +56,13 @@ public:
         if (Huong == 2) A[0].x = A[0].x - 1;
         if (Huong == 3) A[0].y = A[0].y - 1;
 
+    }
+    void AnMoi() {
+        if (A[0].x == Moi.x && A[0].y == Moi.y) {
+            DoDai++;
+            A[DoDai - 1] = A[DoDai - 2]; // tạm nhân bản đoạn cuối
+            TaoMoi();
+        }
     }
 };
 
@@ -51,6 +83,8 @@ int main()
         system("cls");
         r.Ve();
         r.DiChuyen(Huong);
+        r.AnMoi();
+
         Sleep(300);
     }
 
@@ -58,12 +92,3 @@ int main()
 }
 
 
-void gotoxy(int column, int line)
-{
-    COORD coord;
-    coord.X = column;
-    coord.Y = line;
-    SetConsoleCursorPosition(
-        GetStdHandle(STD_OUTPUT_HANDLE),
-        coord;
-}
