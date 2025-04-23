@@ -28,17 +28,25 @@ class CONRAN {
 public:
     struct Point A[100];
     int DoDai;
+    Point Moi;
     CONRAN() {
         DoDai = 3;
         A[0].x = 10; A[0].y = 10;
         A[1].x = 11; A[1].y = 10;
         A[2].x = 12; A[2].y = 10;
+        TaoMoi();
     }
-    void Ve() {
+    void Ve() { 
         for (int i = 0; i < DoDai; i++) {
             gotoxy(A[i].x, A[i].y);
             cout << "X";
         }
+        gotoxy(Moi.x, Moi.y); cout << "*";
+
+    }
+    void TaoMoi() {
+        Moi.x = 1 + rand() % (WIDTH - 2);
+        Moi.y = 1 + rand() % (HEIGHT - 2);
     }
     void DiChuyen(int Huong) {
         for (int i = DoDai - 1; i > 0; i--)
@@ -48,6 +56,13 @@ public:
         if (Huong == 2) A[0].x = A[0].x - 1;
         if (Huong == 3) A[0].y = A[0].y - 1;
 
+    }
+    void AnMoi() {
+        if (A[0].x == Moi.x && A[0].y == Moi.y) {
+            DoDai++;
+            A[DoDai - 1] = A[DoDai - 2]; // tạm nhân bản đoạn cuối
+            TaoMoi();
+        }
     }
 };
 
@@ -68,6 +83,8 @@ int main()
         system("cls");
         r.Ve();
         r.DiChuyen(Huong);
+        r.AnMoi();
+
         Sleep(300);
     }
 
