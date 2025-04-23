@@ -34,6 +34,7 @@ public:
         A[0].x = 10; A[0].y = 10;
         A[1].x = 11; A[1].y = 10;
         A[2].x = 12; A[2].y = 10;
+        TaoMoi();
     }
     void Ve() { 
         for (int i = 0; i < DoDai; i++) {
