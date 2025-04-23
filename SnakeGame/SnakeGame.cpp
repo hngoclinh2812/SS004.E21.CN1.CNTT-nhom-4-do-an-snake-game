@@ -28,17 +28,22 @@ class CONRAN {
 public:
     struct Point A[100];
     int DoDai;
+    Point Moi;
     CONRAN() {
         DoDai = 3;
         A[0].x = 10; A[0].y = 10;
         A[1].x = 11; A[1].y = 10;
         A[2].x = 12; A[2].y = 10;
     }
-    void Ve() {
+    void Ve() { 
         for (int i = 0; i < DoDai; i++) {
             gotoxy(A[i].x, A[i].y);
             cout << "X";
         }
+    }
+    void TaoMoi() {
+        Moi.x = 1 + rand() % (WIDTH - 2);
+        Moi.y = 1 + rand() % (HEIGHT - 2);
     }
     void DiChuyen(int Huong) {
         for (int i = DoDai - 1; i > 0; i--)
