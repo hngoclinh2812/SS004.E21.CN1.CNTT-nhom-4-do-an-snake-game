@@ -41,6 +41,8 @@ public:
             gotoxy(A[i].x, A[i].y);
             cout << "X";
         }
+        gotoxy(Moi.x, Moi.y); cout << "*";
+
     }
     void TaoMoi() {
         Moi.x = 1 + rand() % (WIDTH - 2);
@@ -82,6 +84,7 @@ int main()
         r.Ve();
         r.DiChuyen(Huong);
         r.AnMoi();
+
         Sleep(300);
     }
 
