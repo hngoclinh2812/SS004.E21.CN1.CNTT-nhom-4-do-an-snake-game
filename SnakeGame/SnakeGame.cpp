@@ -44,7 +44,7 @@ public:
         srand(time(0));
         spawnFood();
     }
-
+    //tao snack 
     void spawnFood() {
         bool valid;
         do {
