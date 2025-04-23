@@ -32,6 +32,31 @@ public:
     Point food;
     bool gameOver;
     int score;
+    SnakeGame() {
+        length = 3;
+        snake[0] = { 10, 10 };
+        snake[1] = { 9, 10 };
+        snake[2] = { 8, 10 };
+        direction = 0;
+        gameOver = false;
+        score = 0;
+        srand(time(0));
+        spawnFood();
+    }
+
+    void spawnFood() {
+        bool valid;
+        do {
+            valid = true;
+            food.x = rand() % (WIDTH - 2) + 1;
+            food.y = rand() % (HEIGHT - 2) + 1;
+            for (int i = 0; i < length; i++) {
+                if (food.x == snake[i].x && food.y == snake[i].y) {
+                    valid = false;
+                    break;
+                }
+            }
+        } while (!valid);
 }
 
 int main() {
