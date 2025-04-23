@@ -44,7 +44,7 @@ public:
         srand(time(0));
         spawnFood();
     }
-    //tao snack 
+
     void spawnFood() {
         bool valid;
         do {
@@ -58,7 +58,102 @@ public:
                 }
             }
         } while (!valid);
-}
+    }
+
+    void Input() {
+
+        if (_kbhit()) {
+
+            int key = _getch();
+
+            if (key == 224) { // phím mũi tên
+
+                key = _getch();
+
+                if (key == 75 && direction != 0) direction = 2; // ←
+
+                if (key == 77 && direction != 2) direction = 0; // →
+
+                if (key == 72 && direction != 1) direction = 3; // ↑
+
+                if (key == 80 && direction != 3) direction = 1; // ↓
+            }
+        }
+    }
+
+    void Update() {
+
+        for (int i = length - 1; i > 0; i--)
+            snake[i] = snake[i - 1];
+
+        switch (direction) {
+            case 0: snake[0].x++; break;
+            case 1: snake[0].y++; break;
+            case 2: snake[0].x--; break;
+            case 3: snake[0].y--; break;
+        }
+
+        if (snake[0].x <= 0 || snake[0].x >= WIDTH - 1 || snake[0].y <= 0 || snake[0].y >= HEIGHT - 1)
+            gameOver = true;
+
+        for (int i = 1; i < length; i++) {
+            if (snake[0].x == snake[i].x && snake[0].y == snake[i].y) {
+                gameOver = true;
+            }
+        }
+
+        if (snake[0].x == food.x && snake[0].y == food.y) {
+            length++;
+            score += 10;
+            spawnFood();
+        }
+    }
+
+    void Render() {
+        gotoxy(0, 0);
+
+        // Vẽ khung
+        for (int i = 0; i < WIDTH; i++) cout << "#";
+        cout << "\n";
+        for (int i = 1; i < HEIGHT - 1; i++) {
+            for (int j = 0; j < WIDTH; j++) {
+                if (j == 0 || j == WIDTH - 1)
+                    cout << "#";
+                else
+                    cout << " ";
+            }
+            cout << "\n";
+        }
+
+        for (int i = 0; i < WIDTH; i++) cout << "#";
+
+        // Vẽ rắn
+        for (int i = 0; i < length; i++) {
+            gotoxy(snake[i].x, snake[i].y);
+            cout << (i == 0 ? "O" : "o");
+        }
+
+        // Vẽ mồi
+        gotoxy(food.x, food.y);
+        cout << "*";
+
+        // Vẽ điểm
+        gotoxy(0, HEIGHT);
+        cout << "Score: " << score;
+    }
+
+    void Run() {
+        HideCursor();
+        while (!gameOver) {
+            Input();
+            Update();
+            Render();
+            Sleep(150);
+        }
+        gotoxy(0, HEIGHT + 2);
+        cout << "Game Over! Final Score: " << score << "\n";
+    }
+};
 
 int main() {
     SnakeGame game;
