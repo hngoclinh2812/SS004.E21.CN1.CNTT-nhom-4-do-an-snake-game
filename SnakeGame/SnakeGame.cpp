@@ -2,6 +2,7 @@
 #include <windows.h>
 #include <cstdlib>
 #include <conio.h>
+
 using namespace std;
 // Kích thước khung trò chơi
 const int WIDTH = 40;    // Chiều ngang
@@ -73,14 +74,15 @@ int main()
     char t;
 
     while (1) {
-        if (kbhit()) {
-            t = getch();
+        if (_kbhit()) {
+            t = _getch();
             if (t == 'a') Huong = 2;
             if (t == 'w') Huong = 3;
             if (t == 'd') Huong = 0;
             if (t == 'x') Huong = 1;
         }
         system("cls");
+        
         r.Ve();
         r.DiChuyen(Huong);
         r.AnMoi();
