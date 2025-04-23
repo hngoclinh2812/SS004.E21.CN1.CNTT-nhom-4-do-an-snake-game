@@ -55,6 +55,13 @@ public:
         if (Huong == 3) A[0].y = A[0].y - 1;
 
     }
+    void AnMoi() {
+        if (A[0].x == Moi.x && A[0].y == Moi.y) {
+            DoDai++;
+            A[DoDai - 1] = A[DoDai - 2]; // tạm nhân bản đoạn cuối
+            TaoMoi();
+        }
+    }
 };
 
 int main()
